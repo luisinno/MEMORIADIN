@@ -1,0 +1,14 @@
+OBJS = main.obj matrizBidimensional.obj
+CC = cl
+#CTAGS = /c 
+CTAGS = /c /RTC1 /DDEBUG
+
+matrices.exe : $(OBJS)
+	$(CC) $(OBJS) /Fematrices.exe
+
+main.obj : main.c matrizBidimensional.h  
+	$(CC) $(CTAGS) main.c
+
+matrizBidimensional.obj : matrizBidimensional.c matrizBidimensional.h
+	$(CC) $(CTAGS) matrizBidimensional.c
+	
