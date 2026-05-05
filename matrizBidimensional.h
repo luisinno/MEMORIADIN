@@ -59,4 +59,5 @@ float *obtenerColumnaMaxMatFloat(matFloatRef mat, intRef errNum);
 matIntRef devolverPrimeraSimetrica(matIntRef mat, int orden, intRef errNum);
 matFloatRef devolverPrimeraSimetrica(matFloatRef mat, int orden, intRef errNum);
 
+hola
 #endif
