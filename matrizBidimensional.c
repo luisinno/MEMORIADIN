@@ -362,3 +362,130 @@ sumarMatInt(matIntRef a, matIntRef b, intRef errNum)
 }
 
 
+// EJERCICIO 3: MULTIPLICACIÓN DE MATRICES Y OBTENCIÓN DE COLUMNA MÁXIMA
+matIntRef multiplicarMatInt(matIntRef a, matIntRef b, intRef errNum){
+    int i, j, k, res;
+    matIntRef c;
+    if (!(res =fallaMatrizInt(a)) && !(res = fallaMatrizInt(b))) {  // fallamatriz devuelve por retorno 0 si la matriz es correcta, por lo que se niega para entrar al if
+        if (a->numCol != b->numFil) {
+#ifdef DEBUG            
+            fprintf(stderr, "Error: dimensiones incorrectas\n\n");
+#endif
+            *errNum = -5;
+            return NULL;    
+        }
+        else {
+            if (NULL != (c = crearMatInt(a->numFil, b->numCol, &res))) { // multiplicación de matrices: filas de a por columnas de b. crearMatInt no es NULL si la matriz es correcrta.
+                for (i=0; i < a->numFil; i++)
+                    for (j = 0; j < b->numCol; j++) {
+                        c->m[i][j] = 0;
+                        for (k = 0; k < a->numCol; k++) // a->numCol == b->numFil
+                            c->m[i][j] += a->m[i][k] * b->m[k][j];
+                    }
+                *errNum = 0;
+                return c; // MATRIZ CORRECTA !
+            }
+            else {
+                *errNum = res; // res es el código de error devuelto por crearMatInt
+                return NULL;
+            }
+        }   
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por fallaMatrizInt
+        return NULL;
+    }
+}
+
+matFloatRef multiplicarMatFloat(matFloatRef a, matFloatRef b, intRef errNum){
+    int i, j, k, res;
+    matFloatRef c;
+    if(!(res =fallaMatrizFloat(a)) && !(res = fallaMatrizFloat(b))) {  // fallamatriz devuelve por retorno 0 si la matriz es correcta, por lo que se niega para entrar al if
+        if (a->numCol != b->numFil){
+            *errNum = -5;
+            return NULL;
+        }
+        else {
+            if (NULL != (c = crearMatFloat(a->numFil, b->numCol, &res))) { // res es de crearMatFloat, no es NULL si la matriz es correcrta.
+                for (i=0; i < a->numFil; i++)
+                    for (j = 0; j < b->numCol; j++) {
+                        c->m[i][j] = 0;
+                        for (k = 0; k < a->numCol; k++) // a->numCol == b->numFil
+                            c->m[i][j] += a->m[i][k] * b->m[k][j];
+                    }
+                *errNum = 0;
+                return c;
+            }
+            else {
+                *errNum = res;
+                return NULL;
+            }
+        }
+
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por fallaMatrizFloat
+        return NULL;
+        }
+}
+
+int *obtenerColumnaMaxMatInt(matIntRef mat, intRef errNum){
+    int i, j, res;
+    int *colMax; // vector en el que copiaremos la columna máxima de la matriz. 
+    if (!(res = fallaMatrizInt(mat))) { 
+        if (NULL != (colMax = malloc(mat->numCol * sizeof(int)))) { // reservamos memoria para el vector columna máxima. Si no es NULL, la reserva fue correcta.
+            for (j = 0; j < mat->numCol; j++) { // recorremos las columnas de la matriz
+                colMax[j] = mat->m[0][j]; // inicializamos el máximo de cada columna con el primer elemento de la columna j-ésima
+                for (i = 1; i < mat->numFil; i++) { // recorremos las filas de la columna j
+                    if (mat->m[i][j] >= colMax[j]) { // si encontramos un elemento mayor que el máximo actual (en el primer caso es mat->m[0][j]), lo actualizamos
+                        colMax[j] = mat->m[i][j];
+                    }
+                }
+            }
+            *errNum = 0;
+            return colMax; // devolvemos el vector columna máxima
+        }
+        else {
+            *errNum = -5; // error en reserva memoria para el vector columna máxima
+            return NULL;
+        }
+    
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por fallaMatrizInt
+        return NULL;
+    }
+}
+
+
+
+float *obtenerColumnaMaxMatFloat(matFloatRef mat, intRef errNum){
+    int i, j, res;
+    float *colMax; // vector de floats en el que copiaremos la columna máxima de la matriz.
+    if (!(res = fallaMatrizFloat(mat))){
+        if (NULL != (colMax = malloc(mat->numCol * sizeof(float)))) {
+        for (j = 0; j < mat->numCol; j++) { // recorremos las columnas de la matriz
+            colMax[j] = mat->m[0][j]; // inicializamos el máximo de cada columna con el primer elemento de la columna j-ésima
+            for (i = 1; i < mat->numFil; i++) { // recorremos las filas de la columna j
+                if (mat->m[i][j] >= colMax[j]) { // si encontramos un elemento mayor que el máximo actual (en el primer caso es mat->m[0][j]), lo actualizamos
+                    colMax[j] = mat->m[i][j];
+                }
+            }
+        }
+        *errNum = 0;
+        return colMax;
+        }
+        else {
+        *errNum = -5; // error en reserva memoria para el vector columna máxima
+        return NULL;
+        }
+
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por fallaMatrizFloat
+        return NULL;
+    }
+
+}
+
+//EJERCICIO 4: SUBMATRICES SIMÉTRICAS.

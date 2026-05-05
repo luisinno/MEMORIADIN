@@ -42,8 +42,21 @@ int mostrarMatFloat(matFloatRef m, charRef c);
 int mostrarMatInt(matIntRef m, charRef c);
 
 
+int fallaMatrizInt(matIntRef mat);
+int fallaMatrizFloat(matFloatRef mat);	
+
+
 matFloatRef sumarMatFloat(matFloatRef a, matFloatRef b, intRef errNum);
 matIntRef sumarMatInt(matIntRef a, matIntRef b, intRef errNum);
 
+matIntRef multiplicarMatInt(matIntRef a, matIntRef b, intRef errNum);
+matFloatRef multiplicarMatFloat(matFloatRef a, matFloatRef b, intRef errNum);
+
+
+int *obtenerColumnaMaxMatInt(matIntRef mat, intRef errNum);
+float *obtenerColumnaMaxMatFloat(matFloatRef mat, intRef errNum);
+
+matIntRef devolverPrimeraSimetrica(matIntRef mat, int orden, intRef errNum);
+matFloatRef devolverPrimeraSimetrica(matFloatRef mat, int orden, intRef errNum);
 
 #endif

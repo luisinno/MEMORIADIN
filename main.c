@@ -14,7 +14,7 @@
 int
 main (int argc, const char * argv[])
 {
-	char menu[] = "Suma de matrices: A) Leer datos B) Sumar matrices C) Ver resultados D) Liberar matrices Q) Salir";
+	char menu[] = "Suma de matrices: A) Leer datos B) Sumar matrices C) Ver resultados D) Liberar matrices E) Multiplicar matrices F) Obtener columna máxima G) Obtener primera simétrica H) Q) Salir";
 	char opcion;
     int numFil, numCol,errNum;
     
@@ -83,6 +83,29 @@ main (int argc, const char * argv[])
 				C = NULL;
 				printf("efectuada.\n\n");
                 break;
+			case 'E':
+				printf("\n\nMultiplicación...");
+                if (NULL != C){
+                    liberarMatFloat(C);
+                    free(C);
+                }
+				if (NULL == (C = multiplicarMatFloat(A, B, &errNum)))
+                    printf("... no realizada %d\n",errNum);
+                else
+                    printf("efectuada.\n\n");
+				break;
+			case 'F':
+				printf("\n\nObteniendo columna máxima...");
+                if (NULL != (C = obtenerColumnaMaxMatFloat(A, &errNum)))
+					printf("Columna máxima obtenida: %p.\n\n", (void*)C);
+				else
+					printf("... no obtenida %d\n",errNum);
+			case 'G':
+				printf("\n\nObteniendo primera simétrica...");
+                if (NULL != (C = devolverPrimeraSimetrica(A, numFil, &errNum)))
+					printf("Primera simétrica obtenida: %p.\n\n", (void*)C);
+				else
+					printf("... no obtenida %d\n",errNum);
 			case 'Q':
 				printf("\n\nSaliendo.\n\n");
 				break;
