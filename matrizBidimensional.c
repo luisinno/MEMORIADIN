@@ -489,3 +489,153 @@ float *obtenerColumnaMaxMatFloat(matFloatRef mat, intRef errNum){
 }
 
 //EJERCICIO 4: SUBMATRICES SIMÉTRICAS.
+matIntRef devolverPrimeraSimetrica(matIntRef mat, int orden, intRef errNum){
+    int i, j, k, l, p, res;
+    matIntRef sim; // submatriz simétrica que devolveremos.
+    if (!(res = fallaMatrizInt(mat))) {
+        if (orden > mat->numFil || orden > mat->numCol) { // el orden de la submatriz simétrica no puede ser mayor que el número de filas o columnas de la matriz original
+#ifdef DEBUG
+            fprintf(stderr, "Error: orden de la submatriz simétrica mayor que el número de filas o columnas de la matriz original\n");
+#endif
+            *errNum = -5;
+            return NULL;      
+    if (NULL != (sim = crearMatInt(orden, orden, &res))) { // res es de crearMatInt, no es NULL si la matriz es correcrta.
+        for (i = 0; i < mat->numFil - orden + 1; i++) { // recorremos las filas de la matriz original hasta el número de filas menos el orden de la submatriz simétrica más 1
+            for (j = 0; j < mat->numCol - orden + 1; j++) { // recorremos las columnas de la matriz original hasta el número de columnas menos el orden de la submatriz simétrica más 1
+                if (mat->m[i][j] == mat->m[j][i]) { // si el elemento de la posición (i,j) es igual al elemento de la posición (j,i), entonces la submatriz que empieza en (i,j) y tiene orden "orden" es simétrica.
+                    for (k = 0; k < orden; k++)
+                        for (l = 0; l < orden; l++)
+                            sim->m[k][l] = mat->m[i+k][j+l];
+                    *errNum = 0;
+                    return sim;
+                }
+            }
+        }
+        /* for (i = 0; i < mat->numFil - orden + 1; i++) {
+                for (j = 0; j < mat->numCol - orden + 1; j++) {
+                    esSimetrica = 1;
+                    
+                    for (k = 0; k < orden && esSimetrica; k++) {
+                        for (l = 0; l < orden && esSimetrica; l++) {
+                            if (mat->m[i+k][j+l] != mat->m[i+l][j+k]) {
+                                esSimetrica = 0;
+                            }
+                        }
+                    }
+                    
+                    if (esSimetrica) {
+                        for (k = 0; k < orden; k++)
+                            for (l = 0; l < orden; l++)
+                                sim->m[k][l] = mat->m[i+k][j+l];
+                        *errNum = 0;
+                        return sim;
+                    }
+                }
+            }*/
+ // Si no encontramos ninguna submatriz simétrica, liberar memoria MANUALMENTE
+            for (p = 0; p < orden; p++) {
+                free(sim->m[p]);  // Liberar cada fila
+            }
+            free(sim->m);  // Liberar el array de punteros
+            free(sim);     // Liberar la estructura
+            *errNum = -6;
+            return NULL;
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por crearMatInt
+        return NULL;
+    }
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por fallaMatrizInt
+        return NULL;
+    }
+
+
+
+
+
+}
+
+}
+
+
+
+
+matFloatRef devolverPrimeraSimetrica(matFloatRef mat, int orden, intRef errNum){
+int i, j, k, l, p, res;
+    matFloatRef sim; // submatriz simétrica que devolveremos.
+    if (!(res = fallaMatrizFloat(mat))) {
+        if (orden > mat->numFil || orden > mat->numCol) { // el orden de la submatriz simétrica no puede ser mayor que el número de filas o columnas de la matriz original
+#ifdef DEBUG
+            fprintf(stderr, "Error: orden de la submatriz simétrica mayor que el número de filas o columnas de la matriz original\n");
+#endif
+            *errNum = -5;
+            return NULL;      
+    if (NULL != (sim = crearMatFloat(orden, orden, &res))) { // res es de crearMatInt, no es NULL si la matriz es correcrta.
+        for (i = 0; i < mat->numFil - orden + 1; i++) { // recorremos las filas de la matriz original hasta el número de filas menos el orden de la submatriz simétrica más 1
+            for (j = 0; j < mat->numCol - orden + 1; j++) { // recorremos las columnas de la matriz original hasta el número de columnas menos el orden de la submatriz simétrica más 1
+                if (mat->m[i][j] == mat->m[j][i]) { // si el elemento de la posición (i,j) es igual al elemento de la posición (j,i), entonces la submatriz que empieza en (i,j) y tiene orden "orden" es simétrica.
+                    for (k = 0; k < orden; k++)
+                        for (l = 0; l < orden; l++)
+                            sim->m[k][l] = mat->m[i+k][j+l];
+                    *errNum = 0;
+                    return sim;
+                }
+            }
+        }
+        /* for (i = 0; i < mat->numFil - orden + 1; i++) {
+                for (j = 0; j < mat->numCol - orden + 1; j++) {
+                    esSimetrica = 1;
+                    
+                    for (k = 0; k < orden && esSimetrica; k++) {
+                        for (l = 0; l < orden && esSimetrica; l++) {
+                            if (mat->m[i+k][j+l] != mat->m[i+l][j+k]) {
+                                esSimetrica = 0;
+                            }
+                        }
+                    }
+                    
+                    if (esSimetrica) {
+                        for (k = 0; k < orden; k++)
+                            for (l = 0; l < orden; l++)
+                                sim->m[k][l] = mat->m[i+k][j+l];
+                        *errNum = 0;
+                        return sim;
+                    }
+                }
+            }*/
+ // Si no encontramos ninguna submatriz simétrica, liberar memoria MANUALMENTE
+            for (p = 0; p < orden; p++) {
+                free(sim->m[p]);  // Liberar cada fila
+            }
+            free(sim->m);  // Liberar el array de punteros
+            free(sim);     // Liberar la estructura
+            *errNum = -6;
+            return NULL;
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por crearMatInt
+        return NULL;
+    }
+    }
+    else {
+        *errNum = res; // res es el código de error devuelto por fallaMatrizInt
+        return NULL;
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+}
+
+//EJERCICIO 5:ELIMINAR FILAS DE UNA MATRIZ BIDIMENSIONAL.
+
