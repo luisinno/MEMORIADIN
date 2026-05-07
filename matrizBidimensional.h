@@ -59,4 +59,9 @@ float *obtenerColumnaMaxMatFloat(matFloatRef mat, intRef errNum);
 matIntRef devolverPrimeraSimetrica(matIntRef mat, int orden, intRef errNum);
 matFloatRef devolverPrimeraSimetrica(matFloatRef mat, int orden, intRef errNum);
 
+int eliminarFilasMatInt(matInt *matriz);
+
+matInt *extraerSubMatIntCuadrada(matInt *matrizOrigen, int filOrigen, int colOrigen, int dimension, int *codError);
+
+
 #endif
